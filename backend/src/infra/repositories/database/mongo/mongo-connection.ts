@@ -6,7 +6,7 @@ import {
 } from 'mongodb';
 
 import { ILogger } from '../../../log/interfaces';
-import { ILoggerConfig } from 'src/infra/log/logging.config';
+import { ILoggerConfig } from '../../../log/logging.config';
 
 export class MongoConnection {
   private mongoClient: MongoClient;

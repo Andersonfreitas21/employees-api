@@ -1,5 +1,5 @@
-import { DateUtil } from 'src/util/date.util';
-import { StringUtil } from 'src/util/string.util';
+import { DateUtil } from '../util/date.util';
+import { StringUtil } from '../util/string.util';
 
 export class EmployeeEntity {
   _id: string | null;
