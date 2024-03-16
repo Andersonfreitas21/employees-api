@@ -9,22 +9,19 @@ export class EmployeeEntity {
   cellPhoneNumber: string | null;
   birthdayDate: string | Date;
 
-  isValid() {
-    let hasError = false;
+  isValid(ignoreFields: (keyof EmployeeEntity)[] = []) {
     const errors: Record<Partial<keyof EmployeeEntity>, string> = Object.create(
       null,
     );
 
     if (!StringUtil.isValid(this.name)) {
       errors.name = 'Invalid name';
-      hasError = true;
     }
 
     const isValidEmail =
       StringUtil.isValid(this.email) && StringUtil.isValidEmail(this.email);
 
     if (!isValidEmail) {
-      hasError = true;
       errors.email = 'Invalid email';
     }
 
@@ -32,21 +29,40 @@ export class EmployeeEntity {
       this.cellPhoneNumber = String(this.cellPhoneNumber);
     }
 
-    if (DateUtil.isValid(this.birthdayDate)) {
+    if (!DateUtil.isValid(this.birthdayDate)) {
+      errors.birthdayDate = 'Invalid birthdayDate';
+    } else {
+      this.birthdayDate = new Date(this.birthdayDate);
+    }
+
+    for (const fieldToIgnore of ignoreFields) {
+      Reflect.deleteProperty(errors, fieldToIgnore);
+    }
+
+    let hasError = false;
+    for (const _ in errors) {
       hasError = true;
-      errors.birthdayDate = 'Invalid email';
+      break;
     }
 
     return { hasError, errors };
   }
 
-  get json() {
-    return {
+  getJson(ignoreFields: (keyof EmployeeEntity)[] = []) {
+    const entity = {
       name: this.name,
       position: this.position,
       email: this.email,
       cellPhoneNumber: this.cellPhoneNumber,
       birthdayDate: this.birthdayDate,
     };
+
+    for (const fieldToRemove of ignoreFields) {
+      if (Reflect.has(entity, fieldToRemove)) {
+        Reflect.deleteProperty(entity, fieldToRemove);
+      }
+    }
+
+    return entity;
   }
 }
