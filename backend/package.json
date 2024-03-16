@@ -1,0 +1,22 @@
+{
+  "name": "employee-api",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "main.js",
+  "scripts": {
+    "start:prod": "node src/main.js",
+    "start:dev": "node --watch src/main.js"
+  },
+  "keywords": [],
+  "author": "jpmgoes",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "prettier": "^3.2.5"
+  },
+  "dependencies": {
+    "mongodb": "^6.5.0",
+    "zod": "^3.22.4"
+  }
+}
