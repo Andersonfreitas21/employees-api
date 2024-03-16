@@ -48,6 +48,7 @@ export class EnvService implements IEnvService {
       NODE_ENV: zEnum(['DEV', 'PRD', 'TEST', 'HOM']),
       API_PORT: zString().describe('Server port - 3000'),
       MONGO_DB_CONN_STRING: zString().describe('Mongo connection string'),
+      MONGO_DB_NAME: zString().describe('Mongo db name'),
     });
   }
 }
