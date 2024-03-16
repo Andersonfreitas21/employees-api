@@ -63,5 +63,6 @@ export class MongoConnection {
 
   async disconnect() {
     await this.mongoClient.close(true);
+    this.logger.info('Mongo Connection Closed');
   }
 }
