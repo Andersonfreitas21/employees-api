@@ -4,6 +4,7 @@ import Fastify, {
   FastifyRequest,
 } from 'fastify';
 import FastifyMiddie from '@fastify/middie';
+import cors from '@fastify/cors';
 import { IncomingMessage } from 'node:http';
 
 import { IEnvService } from '../../config/env.service';
@@ -42,6 +43,7 @@ export class HTTPServer implements IServerHTTP {
 
   private async setMiddlewares() {
     await this.server.register(FastifyMiddie, { hook: 'onRequest' });
+    await this.server.register(cors);
 
     this.server.use((req: IncomingMessage, res, next) => {
       res.setHeader('X-Request-Id', req.id.toString());
