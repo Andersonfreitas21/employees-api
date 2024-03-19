@@ -9,6 +9,7 @@ import {
   createEmployee,
   deleteEmployee,
   getAllEmployees,
+  updateEmployee,
 } from "../../services/employees/employees";
 
 interface IProps {
@@ -25,6 +26,16 @@ const HomePage: React.FC<IProps> = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [allEmployees, setAllEmployees] = useState<IDataFromBack[]>([]);
+
+  useEffect(() => {
+    getAllEmployees()
+      .then((result) => {
+        setAllEmployees(result);
+      })
+      .catch(error => {
+        console.error("Error fetching employees:", error);
+      });
+  }, []);
 
   const onHandleAddEmployee = (data: any) => {
     setIsLoading(true);
@@ -55,9 +66,40 @@ const HomePage: React.FC<IProps> = () => {
       });
   };
 
+  const onHandleEditEmployee = (objectId: string, newData: IDataFromBack) => {
+    setIsLoading(true);
+    updateEmployee(objectId, newData)
+      .then(() => getAllEmployees())
+      .then(result => {
+        setAllEmployees(result);
+        setIsLoading(false);
+        setIsModalEditOpen(false); // Close the edit modal after successful update
+      })
+      .catch(error => {
+        console.error("Error updating employee:", error);
+        setIsLoading(false);
+      });
+  }
+
   return (
     <>
-      <RootPageLoyoutStyled></RootPageLoyoutStyled>
+      <RootPageLoyoutStyled>
+        <HeaderComponent/>
+        <MainContainerStyled>
+            <TableComponent 
+                tableData={allEmployees}
+                onAdd={() => setIsModalAddOpen(true)} 
+                onEdit={onHandleEditEmployee} 
+                onDelete={onHandleDeleteEmployee}
+            />
+        </MainContainerStyled>
+        {isModalAddOpen && <ModalAddEmployee
+          onHandleAddDevice={onHandleAddEmployee} 
+          onClickOut={() => setIsModalAddOpen(false)} 
+          onCancel={() => setIsModalAddOpen(false)}
+        />}
+        {isLoading && <LoadingSpinnerCommon/>}
+      </RootPageLoyoutStyled>
     </>
   );
 };
