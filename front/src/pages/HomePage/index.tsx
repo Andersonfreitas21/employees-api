@@ -8,6 +8,7 @@ import LoadingSpinnerCommon from "../../commons/LoadingSpinnerCommon";
 import {
   createEmployee,
   deleteEmployee,
+  getAllEmployees,
 } from "../../services/employees/employees";
 
 interface IProps {
@@ -28,7 +29,7 @@ const HomePage: React.FC<IProps> = () => {
   const onHandleAddEmployee = (data: any) => {
     setIsLoading(true);
     createEmployee(data)
-      // .then(() => getAllEmployees())
+      .then(() => getAllEmployees())
       .then((result) => {
         setAllEmployees(result);
         setIsLoading(false);
@@ -42,7 +43,7 @@ const HomePage: React.FC<IProps> = () => {
   const onHandleDeleteEmployee = (objectId: string) => {
     setIsLoading(true);
     deleteEmployee(objectId)
-      // .then(() => getAllEmployees())
+      .then(() => getAllEmployees())
       .then((result) => {
         setAllEmployees(result);
         setIsLoading(false);
@@ -62,4 +63,3 @@ const HomePage: React.FC<IProps> = () => {
 };
 
 export default HomePage;
-

@@ -15,6 +15,17 @@ export const createEmployee = async (createData: any) => {
   }
 };
 
+export const getAllEmployees = async () => {
+  try {
+    const response = await axios.get(API_URL, { headers: HEADERS });
+    //console.log('All employees:', response.data.results);
+    return response.data.results;
+  } catch (error) {
+    console.error('Error fetching all employees:', error);
+    throw error;
+  }
+};
+
 export const deleteEmployee = async (employeeId: string) => {
   try {
     const response = await axios.delete(`${API_URL}/${employeeId}`, {
