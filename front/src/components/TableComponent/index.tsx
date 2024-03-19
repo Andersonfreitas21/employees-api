@@ -77,12 +77,12 @@ const TableComponent: React.FC<TableComponentProps> = ({ tableData, onAdd, onEdi
           onCancel={() => setIsModalDeleteOpen(false)}
         />}
         {isModalEditOpen && <ModalEditEmployeeComponent
-          // onHandleEditDevice={(data) => {
-          //   onEdit(itemToEditId, data); // Pass the edited data along with the objectId
-          //   setIsModalEditOpen(false);
-          // }}
-          // onClickOut={() => setIsModalEditOpen(false)} 
-          // onCancel={() => setIsModalEditOpen(false)}
+          onHandleEditDevice={(data: any) => {
+            onEdit(itemToEditId, data); // Pass the edited data along with the objectId
+            setIsModalEditOpen(false);
+          }}
+          onClickOut={() => setIsModalEditOpen(false)} 
+          onCancel={() => setIsModalEditOpen(false)}
         />}
       </TableRootContainerStyled>
     </>
