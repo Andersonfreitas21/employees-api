@@ -28,3 +28,14 @@ export const deleteEmployee = async (employeeId: string) => {
   }
 };
 
+export const getEmployee = async (employeeId: string) => {
+  try {
+    const response = await axios.get(`${API_URL}/${employeeId}`, { headers: HEADERS });
+    console.log('Employee data:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching employee:', error);
+    throw error;
+  }
+};
+
