@@ -50,3 +50,13 @@ export const getEmployee = async (employeeId: string) => {
   }
 };
 
+export const updateEmployee = async (employeeId: string, updateData: IDataFromBack) => {
+  try {
+    const response = await axios.put(`${API_URL}/${employeeId}`, updateData, { headers: HEADERS });
+    console.log('Employee updated:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error updating employee:', error);
+    throw error;
+  }
+};
