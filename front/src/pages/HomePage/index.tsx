@@ -1,11 +1,14 @@
-import React, { ReactNode, useState, useEffect } from 'react';
-import { MainContainerStyled, RootPageLoyoutStyled } from './styled';
-import HeaderComponent from '../../components/HeaderComponent';
-import TableComponent from '../../components/TableComponent';
-import ModalAddEmployee from '../../components/ModalAddEmployeeComponent';
-import { IDataFromBack } from '../../interfaces/employee';
-import LoadingSpinnerCommon from '../../commons/LoadingSpinnerCommon';
-import { createEmployee } from '../../services/employees/employees';
+import React, { ReactNode, useState, useEffect } from "react";
+import { MainContainerStyled, RootPageLoyoutStyled } from "./styled";
+import HeaderComponent from "../../components/HeaderComponent";
+import TableComponent from "../../components/TableComponent";
+import ModalAddEmployee from "../../components/ModalAddEmployeeComponent";
+import { IDataFromBack } from "../../interfaces/employee";
+import LoadingSpinnerCommon from "../../commons/LoadingSpinnerCommon";
+import {
+  createEmployee,
+  deleteEmployee,
+} from "../../services/employees/employees";
 
 interface IProps {
   children?: ReactNode;
@@ -26,26 +29,37 @@ const HomePage: React.FC<IProps> = () => {
     setIsLoading(true);
     createEmployee(data)
       // .then(() => getAllEmployees())
-      .then(result => {
+      .then((result) => {
         setAllEmployees(result);
         setIsLoading(false);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("Error creating employee:", error);
         setIsLoading(false);
       });
-  }
+  };
 
-
-
+  const onHandleDeleteEmployee = (objectId: string) => {
+    setIsLoading(true);
+    deleteEmployee(objectId)
+      // .then(() => getAllEmployees())
+      .then((result) => {
+        setAllEmployees(result);
+        setIsLoading(false);
+        setIsModalDeleteOpen(false); // Close the delete modal after successful deletion
+      })
+      .catch((error) => {
+        console.error("Error deleting employee:", error);
+        setIsLoading(false);
+      });
+  };
 
   return (
     <>
-      <RootPageLoyoutStyled>
-        
-      </RootPageLoyoutStyled>
-    </>                                    
+      <RootPageLoyoutStyled></RootPageLoyoutStyled>
+    </>
   );
 };
 
 export default HomePage;
+
